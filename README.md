@@ -1,8 +1,4 @@
 # wetalk
-<<<<<<< HEAD
-专综一课程项目【wetalk在线聊天室】源码仓库
-lh
-=======
 
 专综一课程项目【wetalk 在线聊天室】源码仓库
 
@@ -14,4 +10,3 @@ lh
 - daisyui: ^5.0.0
 - zustand: 5.0.3
 - motion: 12.4.10
->>>>>>> main
