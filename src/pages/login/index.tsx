@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import BgWebM from "../../assets/videos/bg-video.webm";
 import BgVideo from "../../assets/videos/bg-video.mp4";
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
-import { useUserStore, useThemeStore } from "../../store";
+import { useUserStore } from "../../store";
 
 export type FormData = {
   email: string;
@@ -16,7 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const login = useUserStore((state) => state.login);
-  const themeMode = useThemeStore((state) => state.mode);
 
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -26,33 +25,6 @@ const Login = () => {
     password: "",
     repassword: "",
   });
-
-  // 检测当前是否为暗黑模式
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-
-  useEffect(() => {
-    // 根据主题模式设置暗黑模式状态
-    if (themeMode === "dark") {
-      setIsDarkMode(true);
-    } else if (themeMode === "light") {
-      setIsDarkMode(false);
-    } else if (themeMode === "system") {
-      // 检测系统主题偏好
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      setIsDarkMode(prefersDark);
-
-      // 监听系统主题变化
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      const handleChange = (e: MediaQueryListEvent) => {
-        setIsDarkMode(e.matches);
-      };
-
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }
-  }, [themeMode]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,29 +57,26 @@ const Login = () => {
           autoPlay
           loop
           muted
-          className={`fixed top-0 left-0 w-screen h-screen object-cover z-[-1] ${
-            isDarkMode ? "opacity-50 brightness-50" : ""
-          }`}
+          className="fixed top-0 left-0 w-screen h-screen object-cover"
         >
           <source src={BgWebM} type="video/webm" />
           <source src={BgVideo} type="video/mp4" />
         </video>
         {/* 标题和标语 */}
-        <div className="w-2/5 h-[3/5] flex flex-col items-start justify-between gap-y-16">
+        <div className="w-2/5 h-[3/5] mix-blend-difference flex flex-col items-start justify-between gap-y-16">
           <motion.h1
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-design font-black text-9xl text-white"
+            className="font-design font-black text-9xl"
           >
             WeTalk在线聊天室
           </motion.h1>
-
           <motion.p
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="font-mono text-3xl text-white"
+            className="font-mono text-3xl"
           >
             简单、即时、加密，用的更放心。
           </motion.p>
@@ -119,11 +88,7 @@ const Login = () => {
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className={`duration-700 backdrop-blur-2xl w-3/5 min-h-2/5 ${
-              isDarkMode
-                ? "bg-gray-800/70 border-gray-700/50"
-                : "bg-white/10 border-white/20"
-            } border rounded-2xl px-8 py-16 flex flex-col gap-8 shadow-2xl`}
+            className={`duration-700 backdrop-blur-2xl w-3/5 min-h-2/5 border rounded-2xl px-8 py-16 flex flex-col gap-8 shadow-2xl`}
           >
             {/* 切换按钮 */}
             <div className="relative w-full flex justify-center mb-2">
@@ -167,15 +132,11 @@ const Login = () => {
             >
               <motion.div className="relative">
                 <div className="relative w-full">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-700 w-5 h-5" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-700 w-5 h-5 z-10" />
                   <input
                     type="email"
                     placeholder="在此输入您的电子邮件"
-                    className={`input input-bordered w-full text-blue-700 ${
-                      isDarkMode
-                        ? "bg-gray-700/50 border-gray-600"
-                        : "bg-white/5 border-blue-700"
-                    } focus:border-blue-700 transition-all duration-300 placeholder:text-gray-500 pl-10`}
+                    className={`bg-white input input-bordered w-full text-blue-700 focus:border-blue-700 transition-all duration-300 placeholder:text-gray-500 pl-10`}
                     value={formDate.email}
                     onChange={(e) =>
                       setFormDate({ ...formDate, email: e.target.value })
@@ -185,15 +146,11 @@ const Login = () => {
               </motion.div>
               <motion.div className="relative">
                 <div className="relative w-full">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-700 w-5 h-5" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-700 w-5 h-5 z-10" />
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="在此输入您的密码"
-                    className={`input input-bordered w-full text-blue-700 ${
-                      isDarkMode
-                        ? "bg-gray-700/50 border-gray-600"
-                        : "bg-white/5 border-blue-700"
-                    } focus:border-blue-700 transition-all duration-300 placeholder:text-gray-500 pl-10`}
+                    className={`bg-white input input-bordered w-full text-blue-700  focus:border-blue-700 transition-all duration-300 placeholder:text-gray-500 pl-10`}
                     value={formDate.password}
                     onChange={(e) =>
                       setFormDate({ ...formDate, password: e.target.value })
@@ -221,15 +178,11 @@ const Login = () => {
                   className="relative"
                 >
                   <div className="relative w-full">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-700 w-5 h-5" />
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-700 w-5 h-5 z-10" />
                     <input
                       type={showRePassword ? "text" : "password"}
                       placeholder="请再次输入您的密码"
-                      className={`input input-bordered w-full text-blue-700 ${
-                        isDarkMode
-                          ? "bg-gray-700/50 border-gray-600"
-                          : "bg-white/5 border-blue-700"
-                      } focus:border-blue-700 transition-all duration-300 placeholder:text-gray-500 pl-10`}
+                      className={`bg-white input input-bordered w-full text-blue-700  focus:border-blue-700 transition-all duration-300 placeholder:text-gray-500 pl-10`}
                       value={formDate.repassword}
                       onChange={(e) =>
                         setFormDate({ ...formDate, repassword: e.target.value })
