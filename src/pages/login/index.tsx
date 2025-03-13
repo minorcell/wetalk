@@ -63,12 +63,12 @@ const Login = () => {
           <source src={BgVideo} type="video/mp4" />
         </video>
         {/* 标题和标语 */}
-        <div className="w-2/5 h-[3/5] mix-blend-difference flex flex-col items-start justify-between gap-y-16">
+        <div className="w-2/5 h-[3/5] flex flex-col items-start justify-between gap-y-16 text-gray-100 z-10">
           <motion.h1
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-design font-black text-9xl"
+            className="font-design font-bold text-9xl"
           >
             WeTalk在线聊天室
           </motion.h1>
@@ -88,7 +88,7 @@ const Login = () => {
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className={`duration-700 backdrop-blur-2xl w-3/5 min-h-2/5 border rounded-2xl px-8 py-16 flex flex-col gap-8 shadow-2xl`}
+            className={`duration-700 backdrop-blur-2xl w-3/5 min-h-2/5 rounded-2xl px-8 py-16 flex flex-col gap-8 shadow-2xl`}
           >
             {/* 切换按钮 */}
             <div className="relative w-full flex justify-center mb-2">
